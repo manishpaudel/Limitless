@@ -63,6 +63,8 @@ const Login = ({ history }) => {
     sendFacebookToken(response.userID, response.accessToken)
   };
 
+  
+
   const handleSubmit = e => {
     console.log(process.env.REACT_APP_API_URL);
     e.preventDefault();
@@ -169,8 +171,8 @@ const Login = ({ history }) => {
               >
                 <input
                   className='w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white'
-                  type='email'
-                  placeholder='Email'
+                  type='text'
+                  placeholder='Email or Phone no.'
                   onChange={handleChange('email')}
                   value={email}
                 />

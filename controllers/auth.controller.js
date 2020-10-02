@@ -131,8 +131,22 @@ exports.activationController = (req, res) => {
   }
 };
 
+
+
 exports.signinController = (req, res) => {
+
+  const checkNumber = text => {
+    if(text%1===0){
+      return true
+    }
+    else{
+      return false
+    }
+  }
+
   const { email, password } = req.body;
+  const isNumber = checkNumber(email)
+    // console.log(isNumber)
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     const firstError = errors.array().map(error => error.msg)[0];
@@ -140,43 +154,92 @@ exports.signinController = (req, res) => {
       errors: firstError
     });
   } else {
+    
     // check if user exist
-    User.findOne({
-      email
-    }).exec((err, user) => {
-      if (err || !user) {
-        return res.status(400).json({
-          errors: 'User with that email does not exist. Please signup'
-        });
-      }
-      // authenticate
-      if (!user.authenticate(password)) {
-        return res.status(400).json({
-          errors: 'Email and password do not match'
-        });
-      }
-      // generate a token and send to client
-      const token = jwt.sign(
-        {
-          _id: user._id
-        },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: '7d'
+    //if user inputs email
+    if(!isNumber){
+      User.findOne({
+        email
+      }).exec((err, user) => {
+        console.log(user)
+        if (err || !user) {
+          return res.status(400).json({
+            errors: 'User with that email does not exist. Please signup'
+          });
         }
-      );
-      const { _id, name, email, role } = user;
+        // authenticate
 
-      return res.json({
-        token,
-        user: {
-          _id,
-          name,
-          email,
-          role
+        if (!user.authenticate(password)) {
+          return res.status(400).json({
+            errors: 'Email and password do not match'
+          });
         }
+        // generate a token and send to client
+        const token = jwt.sign(
+          {
+            _id: user._id
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '7d'
+          }
+        );
+        const { _id, name, email, role } = user;
+
+        return res.json({
+          token,
+          user: {
+            _id,
+            name,
+            email,
+            role
+          }
+        });
       });
-    });
+    }
+
+    //if user inputs phone number
+    else{
+      phone = email
+      User.findOne({
+        phone
+      }).exec((err, user) => {
+        console.log(user)
+        if (err || !user) {
+          return res.status(400).json({
+            errors: 'User with that phone number does not exist. Please signup'
+          });
+        }
+        // authenticate
+
+        if (!user.authenticate(password)) {
+          return res.status(400).json({
+            errors: 'Phone number and password do not match'
+          });
+        }
+        // generate a token and send to client
+        const token = jwt.sign(
+          {
+            _id: user._id
+          },
+          process.env.JWT_SECRET,
+          {
+            expiresIn: '7d'
+          }
+        );
+        const { _id, name, email, role } = user;
+
+        return res.json({
+          token,
+          user: {
+            _id,
+            name,
+            email,
+            role
+          }
+        });
+      });
+    }
   }
 };
 
