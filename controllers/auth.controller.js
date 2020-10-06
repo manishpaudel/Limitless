@@ -26,6 +26,7 @@ exports.registerController = (req, res) => {
     User.findOne({
       email
     }).exec((err, user) => {
+      console.log(user)
       if (user) {
         return res.status(400).json({
           errors: 'Email is taken'
