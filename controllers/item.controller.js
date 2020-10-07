@@ -46,18 +46,16 @@ exports.addItemController = (req,res) => {
                   });
               }
               else{
+                if(category && subcategory1 && name && price && description){
                   const id = createProductId(category)
                   const time = moment().format('YYYY-MM-DD-HH-mm-ss')
-                //   const imagess = new image({
-                    //   image: image
-                //   })
                   console.log(time)
                   const item = new Item({
                     category,
-                    subcategory1,
-                    subcategory2,
-                    subcategory3,
-                    subcategory4,
+                    subCategory1: subcategory1,
+                    subcategory2: subcategory2,
+                    subcategory3: subcategory3,
+                    subcategory4: subcategory4,
                     productId: id,
                     name,
                     image: filepath(),
@@ -87,6 +85,11 @@ exports.addItemController = (req,res) => {
                         })
                     }
                   })
+                }else{
+                  return res.status(402).json({
+                    message: 'Must include category, subcategory1, name, price and description'
+                  })
+                }
               }
           })
 

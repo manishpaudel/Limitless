@@ -67,7 +67,7 @@ const AddItem = () =>{
             image: image
         }
 
-        if(category && name && price ){
+        if(category && subcategory1 && name && price && description ){
             axios.post(`${process.env.REACT_APP_API_URL}/additem`,{},{
                 category, subcategory1,subcategory2,subcategory3,subcategory4, name, 
                 description, detailedDescription, 

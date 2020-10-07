@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', authRouter)
 app.use('/api', userRouter)
 app.use('/api', itemRouter)
-app.use('/uploads',express.static('uploads/products'))
+// app.use('/uploads',express.static('uploads/products'))
 
 app.use((req, res) => {
     res.status(404).json({
