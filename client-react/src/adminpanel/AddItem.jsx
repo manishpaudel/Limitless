@@ -2,11 +2,22 @@ import React, {useState} from 'react'
 import axios from 'axios'
 
 
+let isPercent = false
+const changeDiscount=(price, disc)=>{
+    if(isPercent){
+        disc = disc/100*price
+    }
+    return disc
+}
 
 const AddItem = () =>{
     const [formData, setFormData] = useState({
         category:'', 
-        subcategory:'', 
+        subcategory:'',
+        subcategory1:'',
+        subcategory2:'',
+        subcategory3:'',
+        subcategory4:'',  
         name:'', 
         displayImg: '', 
         image: '', 
@@ -23,7 +34,7 @@ const AddItem = () =>{
         brand:''
     })
 
-    const {category, subcategory, name, 
+    const {category, subcategory1,subcategory2,subcategory3,subcategory4, name, 
         displayImg, image, description, detailedDescription, 
         price, discount, color, innerSize, innerColor, innerPrice, stock, brand} = formData
     
@@ -58,14 +69,17 @@ const AddItem = () =>{
 
         if(category && name && price ){
             axios.post(`${process.env.REACT_APP_API_URL}/additem`,{},{
-                category, subcategory, name, 
+                category, subcategory1,subcategory2,subcategory3,subcategory4, name, 
                 description, detailedDescription, 
                 price, discount, color, size, brand
             }).then(res=>{
                 setFormData({
                     ...formData,
                     category:'', 
-                    subcategory:'', 
+                    subcategory1:'',
+                    subcategory2:'',
+                    subcategory3:'',
+                    subcategory4:'',    
                     name:'', 
                     displayImg: '', 
                     image:'', 
@@ -95,7 +109,10 @@ const AddItem = () =>{
         <div>
             <form onSubmit={handleSubmit}>
                 <input type='text' placeholder='Category' onChange={handleChange('category')} value={category} />
-                <input type='text' placeholder='Sub-Category' onChange={handleChange('subcategory')} value={subcategory} />
+                <input type='text' placeholder='Sub-Category1' onChange={handleChange('subcategory1')} value={subcategory1} />
+                <input type='text' placeholder='Sub-Category2' onChange={handleChange('subcategory2')} value={subcategory2} />
+                <input type='text' placeholder='Sub-Category3' onChange={handleChange('subcategory3')} value={subcategory3} />
+                <input type='text' placeholder='Sub-Category4' onChange={handleChange('subcategory4')} value={subcategory4} />
                 <input type='text' placeholder='Product Name' onChange={handleChange('name')} value={name} /><br/>
                 <input type='file' placeholder='display image' onChange={handleChange('displayImg')} value={displayImg} />
                 <input type='file' placeholder='images' onChange={handleChange('image')} value={image} /><br/>

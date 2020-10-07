@@ -13,7 +13,19 @@ const itemSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        subCategory:{
+        subCategory1:{
+            type: String,
+            required: true
+        },
+        subCategory2:{
+            type: String,
+            required: false
+        },
+        subCategory3:{
+            type: String,
+            required: false
+        },
+        subCategory4:{
             type: String,
             required: false
         },

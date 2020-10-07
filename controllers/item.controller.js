@@ -25,7 +25,7 @@ exports.addItemController = (req,res) => {
    return file.path 
   })
   
-    const {category, subcategory, name, 
+    const {category, subcategory1,subcategory2,subcategory3,subcategory4, name, 
         description, detailedDescription, 
         price, discount, color, size, brand} = req.body
 
@@ -54,7 +54,10 @@ exports.addItemController = (req,res) => {
                   console.log(time)
                   const item = new Item({
                     category,
-                    subcategory,
+                    subcategory1,
+                    subcategory2,
+                    subcategory3,
+                    subcategory4,
                     productId: id,
                     name,
                     image: filepath(),
