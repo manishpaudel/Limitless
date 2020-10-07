@@ -21,7 +21,7 @@ const authRouter = require('./routes/auth.route')
 const userRouter = require('./routes/user.route')
 const itemRouter = require('./routes/item.route')
 
-// Dev Logginf Middleware
+// Dev Logging Middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(cors({
         origin: process.env.CLIENT_URL
@@ -33,6 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', authRouter)
 app.use('/api', userRouter)
 app.use('/api', itemRouter)
+app.use('/uploads',express.static('uploads/products'))
 
 app.use((req, res) => {
     res.status(404).json({

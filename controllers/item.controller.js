@@ -1,35 +1,8 @@
 const Item= require('../models/Item.model')
 const { validationResult } = require('express-validator');
 const moment = require('moment')
-const multer = require('multer')
 
 
-const storage = multer.diskStorage({
-    destination: function(req, file, cb){
-        cb(null,'./uploads/products')
-    },
-    filename: function(req, file, cb){
-        cb(null, new Date().toISOString + file.originalname)
-    }
-})
-
-const fileFilter = (req, file, cb) => {
-    //reject file
-    if(file.mimetype === 'image/jpeg' || file.mimetype === 'image/png'){
-        cb(null,true)
-    }
-    else{
-        cb(null,false)
-    }
-    
-    
-}
-
-const upload = multer({storage: storage, limts: {
-    fileSize:1024*1024*5
-    },
-    fileFilter: fileFilter
-})
 
 const createProductId = (category) => {
     // console.log(category)
@@ -47,8 +20,13 @@ const createProductId = (category) => {
 }
 
 exports.addItemController = (req,res) => {
+  // console.log(req.files)
+  const filepath = () => req.files.map(file=>{
+   return file.path 
+  })
+  
     const {category, subcategory, name, 
-        displayImg, image, description, detailedDescription, 
+        description, detailedDescription, 
         price, discount, color, size, brand} = req.body
 
     const errors = validationResult(req)
@@ -79,8 +57,7 @@ exports.addItemController = (req,res) => {
                     subcategory,
                     productId: id,
                     name,
-                    displayImg,
-                    image,
+                    image: filepath(),
                     description,
                     detailedDescription,
                     price,
