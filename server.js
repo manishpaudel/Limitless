@@ -20,6 +20,7 @@ app.use(bodyParser.json())
 const authRouter = require('./routes/auth.route')
 const userRouter = require('./routes/user.route')
 const itemRouter = require('./routes/item.route')
+const productRouter = require('./routes/products.route')
 
 // Dev Logging Middleware
 if (process.env.NODE_ENV === 'development') {
@@ -33,6 +34,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', authRouter)
 app.use('/api', userRouter)
 app.use('/api', itemRouter)
+app.use('/api', productRouter)
 // app.use('/uploads',express.static('uploads/products'))
 
 app.use((req, res) => {
